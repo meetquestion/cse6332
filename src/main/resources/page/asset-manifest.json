@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.d1cff444.css",
-    "main.js": "./static/js/main.61ba5ae8.js",
+    "main.css": "./static/css/main.bf3b8b64.css",
+    "main.js": "./static/js/main.f423cb04.js",
     "static/js/787.72f94a41.chunk.js": "./static/js/787.72f94a41.chunk.js",
     "static/media/green-korvai-butta-pure-silk-saree-cs6004-600x600h.gif": "./static/media/green-korvai-butta-pure-silk-saree-cs6004-600x600h.fb973d150370a8572a18.gif",
     "static/media/3.jpg": "./static/media/3.22686806eb599f9a9570.jpg",
@@ -35,12 +35,12 @@
     "static/media/be1290988_m.webp": "./static/media/be1290988_m.497abd01a604cafebdc1.webp",
     "static/media/logo.svg": "./static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "./index.html",
-    "main.d1cff444.css.map": "./static/css/main.d1cff444.css.map",
-    "main.61ba5ae8.js.map": "./static/js/main.61ba5ae8.js.map",
+    "main.bf3b8b64.css.map": "./static/css/main.bf3b8b64.css.map",
+    "main.f423cb04.js.map": "./static/js/main.f423cb04.js.map",
     "787.72f94a41.chunk.js.map": "./static/js/787.72f94a41.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d1cff444.css",
-    "static/js/main.61ba5ae8.js"
+    "static/css/main.bf3b8b64.css",
+    "static/js/main.f423cb04.js"
   ]
 }
