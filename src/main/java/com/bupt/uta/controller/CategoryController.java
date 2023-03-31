@@ -25,14 +25,14 @@ public class CategoryController {
         try{
             List<Product> productsList =productService.getAllProduct();
             if(productsList!=null&&productsList.size()>0){
-                map.put("status",200);
+                map.put("status","200");
                 map.put("data",productsList);
             }else{
-                map.put("status",-1);
+                map.put("status","-1");
                 map.put("message","no product");
             }
         }catch (Exception ex){
-            map.put("status",500);//执行出现异常
+            map.put("status","500");//执行出现异常
             map.put("message","error:"+ex.getMessage());
         }
         return JSON.toJSONString(map);
@@ -44,14 +44,14 @@ public class CategoryController {
         try{
             Product product=productService.getProduct(id);
             if(product!=null){
-                map.put("status",200);
+                map.put("status","200");
                 map.put("data",product);
             }else{
-                map.put("status",-1);
+                map.put("status","-1");
                 map.put("message","no product");
             }
         }catch (Exception ex){
-            map.put("status",500);//执行出现异常
+            map.put("status","500");//执行出现异常
             map.put("message","error:"+ex.getMessage());
         }
         return JSON.toJSONString(map);
