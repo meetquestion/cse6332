@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SupplierController {
     @Resource
     private SupplierService supplierService = null;
-
     @PostMapping("/register/supplier")
     public R<Supplier> save(HttpServletRequest request, Supplier admin) {
         // System.out.println(customer.toString());

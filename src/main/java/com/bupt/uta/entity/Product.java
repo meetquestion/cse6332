@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
-    private int id;
+    private long id;
     private String category;
     private String name;
     private String color;
@@ -18,11 +18,11 @@ public class Product {
     private String pic;
     private int supplierid;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
