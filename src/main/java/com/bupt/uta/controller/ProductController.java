@@ -21,32 +21,32 @@ public class ProductController {
 
     @RequestMapping(value="/category",method = RequestMethod.GET)
     public R<List<Product>> getAllProducts(HttpServletRequest request){
-        return productService.getAllProduct();
+        return R.success(productService.getAllProduct());
     }
 
     @RequestMapping(value = "/product/{id}",method = RequestMethod.GET)
     public R<Product> getProduct(@PathVariable long id){
-        return productService.getProduct(id);
+        return R.success(productService.getProduct(id));
     }
 
     @RequestMapping(value = "/suppProducts/{supplierid}",method = RequestMethod.GET)
     public R<List<Product>> getSuppProducts(@PathVariable long supplierid){
-        return productService.getSuppProduct(supplierid);
+        return R.success(productService.getSuppProduct(supplierid));
     }
 
     @RequestMapping(value = "/addProduct",method = RequestMethod.POST)
     public R<String> addProduct(HttpServletRequest request,Product product){
-        return productService.addProduct(product);
+        return R.success(productService.addProduct(product));
     }
 
     @RequestMapping(value = "/deleteProduct/{id}",method = RequestMethod.POST)
     public R<String> deleteProduct(@PathVariable long id){
-        return productService.deleteProduct(id);
+        return R.success(productService.deleteProduct(id));
     }
 
     @RequestMapping(value = "/updateProduct",method = RequestMethod.POST)
     public R<String> updateProduct(HttpServletRequest request,Product product){
-        return productService.updateProduct(product);
+        return R.success(productService.updateProduct(product));
     }
 
 }
