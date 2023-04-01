@@ -19,53 +19,53 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Override
-    public R<List<Product>> getAllProduct(){
+    public List<Product> getAllProduct(){
         List<Product> productsList = productMapper.selectList(null);
-        return R.success(productsList);
+        return productsList;
     }
 
     @Override
-    public R<Product> getProduct(long id) {
+    public Product getProduct(long id) {
         Product product=productMapper.selectById(id);
-        return R.success(product);
+        return product;
     }
 
     @Override
-    public R<List<Product>> getSuppProduct(long supplierid) {
+    public List<Product> getSuppProduct(long supplierid) {
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.eq("supplierid",supplierid);
         List<Product> productList=productMapper.selectList(wrapper);
-        return R.success(productList);
+        return productList;
     }
 
     @Override
-    public R<String> addProduct(Product product) {
+    public String addProduct(Product product) {
         try {
             productMapper.insert(product);
         }catch (Exception e){
-            return R.error("Some error happen");
+            return "Some error happen";
         }
-        return R.success("Insert successfully");
+        return "Insert successfully";
     }
 
     @Override
-    public R<String> deleteProduct(long id) {
+    public String deleteProduct(long id) {
         try {
             productMapper.deleteById(id);
         }catch (Exception e){
-            return R.error("Some error happen");
+            return "Some error happen";
         }
-        return R.success("Delete successfully");
+        return "Delete successfully";
     }
 
     @Override
-    public R<String> updateProduct(Product product) {
+    public String updateProduct(Product product) {
         try {
             productMapper.updateById(product);
         }catch (Exception e){
-            return R.error("Some error happen");
+            return "Some error happen";
         }
-        return R.success("Delete successfully");
+        return "Delete successfully";
     }
 
 }
