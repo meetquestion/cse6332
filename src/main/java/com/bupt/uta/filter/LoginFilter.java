@@ -28,10 +28,13 @@ public class LoginFilter implements Filter {
         String[] urls = new String[]{
                 "/api/register/customer",
                 "/api/register/admin",
+                "/api/register/supplier",
                 "/api/login/customer",
                 "/api/login/admin",
+                "/api/login/supplier",
                 "/api/logout/customer",
                 "/api/logout/admin",
+                "/api/logout/supplier",
                 "/page/**"
         };
 

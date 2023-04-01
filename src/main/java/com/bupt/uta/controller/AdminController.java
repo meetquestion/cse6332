@@ -8,6 +8,7 @@ import com.bupt.uta.entity.Admin;
 import com.bupt.uta.utils.SendEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,5 +70,10 @@ public class AdminController {
         }
         request.getSession().setAttribute("admin", admin1.getUsername());
         return R.success(admin1);
+    }
+    @GetMapping("/logout/admin")
+    public R<String> logout(HttpServletRequest request){
+        request.getSession().removeAttribute("admin");
+        return R.success("Successfully");
     }
 }
