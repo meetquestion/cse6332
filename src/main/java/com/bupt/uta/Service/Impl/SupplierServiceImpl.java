@@ -19,29 +19,5 @@ public class SupplierServiceImpl implements SupplierService {
     @Autowired
     private SupplierMapper supplierMapper;
 
-    @Override
-    public List<Product> getSuppProduct(int supplierid) {
-        QueryWrapper wrapper=new QueryWrapper();
-        wrapper.eq("supplierid",supplierid);
-        List<Product> productList=supplierMapper.selectList(wrapper);
-        return productList;
-    }
 
-    @Override
-    public int addProduct(Product product) {
-        int ans=supplierMapper.insert(product);
-        return ans;
-    }
-
-    @Override
-    public int deleteProduct(int id) {
-        int ans=supplierMapper.deleteById(id);
-        return ans;
-    }
-
-    @Override
-    public int updateProduct(Product product) {
-        int ans=supplierMapper.updateById(product);
-        return ans;
-    }
 }
