@@ -25,12 +25,12 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/product/{id}",method = RequestMethod.GET)
-    public R<Product> getProduct(@PathVariable int id){
+    public R<Product> getProduct(@PathVariable long id){
         return productService.getProduct(id);
     }
 
     @RequestMapping(value = "/suppProducts/{supplierid}",method = RequestMethod.GET)
-    public R<List<Product>> getSuppProducts(@PathVariable int supplierid){
+    public R<List<Product>> getSuppProducts(@PathVariable long supplierid){
         return productService.getSuppProduct(supplierid);
     }
 
@@ -40,7 +40,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/deleteProduct/{id}",method = RequestMethod.POST)
-    public R<String> deleteProduct(@PathVariable int id){
+    public R<String> deleteProduct(@PathVariable long id){
         return productService.deleteProduct(id);
     }
 

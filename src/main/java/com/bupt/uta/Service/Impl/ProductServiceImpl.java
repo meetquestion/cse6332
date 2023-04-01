@@ -25,13 +25,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public R<Product> getProduct(int id) {
+    public R<Product> getProduct(long id) {
         Product product=productMapper.selectById(id);
         return R.success(product);
     }
 
     @Override
-    public R<List<Product>> getSuppProduct(int supplierid) {
+    public R<List<Product>> getSuppProduct(long supplierid) {
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.eq("supplierid",supplierid);
         List<Product> productList=productMapper.selectList(wrapper);
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public R<String> deleteProduct(int id) {
+    public R<String> deleteProduct(long id) {
         try {
             productMapper.deleteById(id);
         }catch (Exception e){
