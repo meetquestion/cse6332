@@ -17,6 +17,7 @@ public class Product {
     private double price;
     private String pic;
     private int supplierid;
+    private int inventory;
 
     public long getId() {
         return id;
@@ -88,5 +89,13 @@ public class Product {
 
     public void setSupplierid(int supplierid) {
         this.supplierid = supplierid;
+    }
+
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
     }
 }
