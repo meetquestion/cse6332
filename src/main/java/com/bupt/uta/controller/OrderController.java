@@ -42,9 +42,10 @@ public class OrderController {
             return R.error("error,null");
         }
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String dateStr = new Date().toString();
-            Date date = simpleDateFormat.parse(dateStr);
+            Date currentTime = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateString = formatter.format(currentTime);
+            Date date = formatter.parse(dateString);
             for(CustomerOrder order : orders){
                 order.setStatus(0);
                 order.setCreateTime(date);
@@ -52,6 +53,7 @@ public class OrderController {
             }
             orderService.saveBatch(orders);
         }catch (Exception e){
+            log.error(e.getMessage());
             return R.error("error");
         }
         return R.success(orders);
