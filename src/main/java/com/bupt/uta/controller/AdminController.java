@@ -75,7 +75,8 @@ public class AdminController {
     public R<String> logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
         Integer count = (Integer) request.getSession().getAttribute("online");
-        request.getSession().setAttribute("online", count - 1);
+        if(count != null)
+            request.getSession().setAttribute("online", count - 1);
         return R.success("Successfully");
     }
     @GetMapping("/online_count")
