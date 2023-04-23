@@ -17,4 +17,5 @@ public class Product {
     private double price;
     private String pic;
     private Long supplierid;
+    private int inventory;
 }
