@@ -32,7 +32,9 @@ public class LoginFilter implements Filter {
                 "/api/login/customer",
                 "/api/login/admin",
                 "/api/login/supplier",
-                "/api/logout",
+                "/api/logout/customer",
+                "/api/logout/admin",
+                "/api/logout/supplier",
                 "/page/**"
         };
 
@@ -61,8 +63,8 @@ public class LoginFilter implements Filter {
 
             String username = (String) request.getSession().getAttribute("user");
             BaseContext.setCurrentUsername(username.split("-")[0]);
-            long id = Thread.currentThread().getId();
-            log.info("线程ID为：{}", id);
+//            long id = Thread.currentThread().getId();
+//            log.info("线程ID为：{}", id);
             filterChain.doFilter(request, response);
             return;
         }
