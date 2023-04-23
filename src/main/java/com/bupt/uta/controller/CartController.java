@@ -1,17 +1,14 @@
 package com.bupt.uta.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bupt.uta.Service.CartService;
 import com.bupt.uta.common.R;
 import com.bupt.uta.entity.Cart;
 import com.bupt.uta.entity.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class CartController {
@@ -32,5 +29,55 @@ public class CartController {
         }catch(Exception e){
             return R.error("error");
         }
+    }
+    //add to cart
+    @RequestMapping(value = "/cart/save",method = RequestMethod.POST)
+    public R<Cart> addToCart(@RequestBody Cart cart){
+        if(cart == null){
+            return R.error("error,cart is null");
+        }
+        try{
+            //如果原来有，修改操作，数量相加
+            LambdaQueryWrapper<Cart> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(Cart::getCustomerId, cart.getCustomerId())
+                    .eq(Cart::getProductId, cart.getProductId())
+                    .eq(Cart::getStatus, cart.getStatus());
+            Cart cart1 = cartService.getOne(lambdaQueryWrapper);
+            if(cart1 !=null){
+                int num = cart1.getNum();
+                cart1.setNum(cart.getNum()+num);
+                cartService.updateById(cart1);
+                return R.success(cart1);
+            }else{
+                //没有，新增
+                cartService.save(cart);
+                return R.success(cart);
+            }
+        }catch (Exception e){
+            return R.error("error");
+        }
+    }
+
+    //delete to cart
+    @RequestMapping(value = "/cart/put/{id}",method = RequestMethod.PUT)
+    public R<Long> deleteToCart(@PathVariable Long id) {
+        if(id == null){
+            return R.error("error,id is null");
+        }
+        try {
+            LambdaQueryWrapper<Cart> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(Cart::getId, id);
+            Cart cart = cartService.getOne(lambdaQueryWrapper);
+            if(cart!=null){
+                //删除
+                cart.setStatus(0);
+                cartService.updateById(cart);
+            }else{
+                return R.error("Cart is not exist!");
+            }
+        }catch(Exception e){
+            return R.error("error");
+        }
+        return R.success(id);
     }
 }
