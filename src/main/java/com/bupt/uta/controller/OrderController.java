@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -139,6 +141,31 @@ public class OrderController {
     @RequestMapping(value = "/order/count",method = RequestMethod.GET)
     public R<List<CustomerOrderVo>> getOrderCount() {
         List<CustomerOrderVo> count = orderService.getCount();
+        Map<Integer, Integer> map = new HashMap<>();
+        if(count.size()!=0){
+            for(CustomerOrderVo vo : count){
+                map.put(vo.getStatus(),1);
+            }
+            if(map.get(1)==null){
+                CustomerOrderVo customerOrderVo = new CustomerOrderVo();
+                customerOrderVo.setCount(0);
+                customerOrderVo.setStatus(1);
+                count.add(customerOrderVo);
+            }
+            if(map.get(0)==null){
+                CustomerOrderVo customerOrderVo = new CustomerOrderVo();
+                customerOrderVo.setCount(0);
+                customerOrderVo.setStatus(0);
+                count.add(customerOrderVo);
+            }
+        }else{
+            for(int i = 0;i<2;i++){
+                CustomerOrderVo customerOrderVo = new CustomerOrderVo();
+                customerOrderVo.setCount(0);
+                customerOrderVo.setStatus(i);
+                count.add(customerOrderVo);
+            }
+        }
         if(count==null){
             return R.error("error,null");
         }else {
@@ -147,10 +174,19 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order/getOrder",method = RequestMethod.GET)
-    public R<List<CustomerOrder>> getCartVoList() {
+    public R<List<CustomerOrder>> getCustomerOrderList(@RequestBody CustomerOrder customerOrder) {
         try{
-            List<CustomerOrder> orderList = orderService.getOrderList();
-            return R.success(orderList);
+
+            if(customerOrder.getCustomerId()!=null){
+                LambdaQueryWrapper<CustomerOrder> wrapper = new LambdaQueryWrapper<>();
+                wrapper.eq(CustomerOrder :: getCustomerId,customerOrder.getCustomerId());
+                List<CustomerOrder> orderList = orderService.list(wrapper);
+                return R.success(orderList);
+            }else {
+                List<CustomerOrder> orderList = orderService.getOrderList();
+                return R.success(orderList);
+            }
+
         }catch(Exception e){
             return R.error("error");
         }
