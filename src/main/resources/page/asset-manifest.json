@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.2f5a0bc1.css",
-    "main.js": "./static/js/main.ec8ac6ee.js",
+    "main.css": "./static/css/main.eb4217b3.css",
+    "main.js": "./static/js/main.f4d99e2f.js",
     "static/js/787.72f94a41.chunk.js": "./static/js/787.72f94a41.chunk.js",
     "static/media/green-korvai-butta-pure-silk-saree-cs6004-600x600h.gif": "./static/media/green-korvai-butta-pure-silk-saree-cs6004-600x600h.fb973d150370a8572a18.gif",
     "static/media/3.jpg": "./static/media/3.22686806eb599f9a9570.jpg",
@@ -34,20 +34,20 @@
     "static/media/opti_1270267229_img4.jpg": "./static/media/opti_1270267229_img4.2056fd67dddce4698ddb.jpg",
     "static/media/opti_1270266755_img0.jpg": "./static/media/opti_1270266755_img0.31f834bbe5dc7c9f8444.jpg",
     "static/media/opti_1270266760_img0.jpg": "./static/media/opti_1270266760_img0.b91ece1a2979a4424bd5.jpg",
-    "static/media/4.jpg": "./static/media/4.2577ae3e62bd2e12d57b.jpg",
+    "static/media/4.jpg": "./static/media/4.e4259d69397e108b312a.jpg",
     "static/media/opti_1270266757_img1.jpg": "./static/media/opti_1270266757_img1.e4259d69397e108b312a.jpg",
     "static/media/opti_1270266765_img1.jpg": "./static/media/opti_1270266765_img1.dac2a22543ce304efb71.jpg",
     "static/media/opti_1270267234_img4.jpg": "./static/media/opti_1270267234_img4.2a9cdc90aa88cc792bdf.jpg",
     "static/media/maroon-9-yards-saree-jr 13772-600x600h.jpg": "./static/media/maroon-9-yards-saree-jr 13772-600x600h.49269fa12f10d328e590.jpg",
     "static/media/opti_1270267231_img0.jpg": "./static/media/opti_1270267231_img0.b75241d5aa55358ee31e.jpg",
-    "static/media/5.jpg": "./static/media/5.03f0c762a2fdbd8b0ea4.jpg",
+    "static/media/5.jpg": "./static/media/5.1cc20af88421ed790367.jpg",
     "static/media/opti_1270267232_img0.jpg": "./static/media/opti_1270267232_img0.1cc20af88421ed790367.jpg",
-    "static/media/2.jpg": "./static/media/2.0728df7c57e084184aab.jpg",
     "static/media/be1277409_m.webp": "./static/media/be1277409_m.d5677e1c3938765fa2ac.webp",
     "static/media/img.png": "./static/media/img.9b750a5760a6278228c6.png",
     "static/media/be1291128_m.webp": "./static/media/be1291128_m.51268eca6c94f803d305.webp",
     "static/media/be1292058_m.webp": "./static/media/be1292058_m.0e48d0464264c0996d00.webp",
     "static/media/be1292082_m.webp": "./static/media/be1292082_m.138aecf423cc607f9214.webp",
+    "static/media/2.jpg": "./static/media/2.0728df7c57e084184aab.jpg",
     "static/media/be1229647_m.webp": "./static/media/be1229647_m.0728df7c57e084184aab.webp",
     "static/media/download.jfif": "./static/media/download.93664e46baf6f45b12dc.jfif",
     "static/media/be1290956_m.webp": "./static/media/be1290956_m.9c2eccb76b29d7b3f5e3.webp",
@@ -59,12 +59,12 @@
     "static/media/download (1).jfif": "./static/media/download (1).1db3aa4c2dcd6647df3e.jfif",
     "static/media/logo.svg": "./static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "./index.html",
-    "main.2f5a0bc1.css.map": "./static/css/main.2f5a0bc1.css.map",
-    "main.ec8ac6ee.js.map": "./static/js/main.ec8ac6ee.js.map",
+    "main.eb4217b3.css.map": "./static/css/main.eb4217b3.css.map",
+    "main.f4d99e2f.js.map": "./static/js/main.f4d99e2f.js.map",
     "787.72f94a41.chunk.js.map": "./static/js/787.72f94a41.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2f5a0bc1.css",
-    "static/js/main.ec8ac6ee.js"
+    "static/css/main.eb4217b3.css",
+    "static/js/main.f4d99e2f.js"
   ]
 }

@@ -97,14 +97,13 @@ public class CustomerController {
         if(!password.substring(password.length() - 6).equals(verificationCode)){
             return R.error("VerificationCode is wrong");
         }
-
-        request.getSession().setAttribute("customer", cus.getUsername());
-        log.info("session:{} ", request.getSession().getAttribute("customer"));
+        request.getSession().setAttribute("user", cus.getUsername()+"-"+cus.getId());
+        log.info("session:{} ", request.getSession().getAttribute("user"));
         return R.success(cus);
     }
     @GetMapping("/logout/customer")
     public R<String> logout(HttpServletRequest request){
-        request.getSession().removeAttribute("customer");
+        request.getSession().removeAttribute("user");
         return R.success("Successfully");
     }
 

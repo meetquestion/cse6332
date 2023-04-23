@@ -68,12 +68,12 @@ public class AdminController {
         if(!admin1.getPassword().equals(password)){
             return R.error("Login failed. The password is wrong.");
         }
-        request.getSession().setAttribute("customer", admin1.getUsername());
+        request.getSession().setAttribute("user", admin1.getUsername()+"-"+admin1.getId());
         return R.success(admin1);
     }
-    @GetMapping("/logout/admin")
+    @GetMapping("/logout")
     public R<String> logout(HttpServletRequest request){
-        request.getSession().removeAttribute("admin");
+        request.getSession().removeAttribute("user");
         return R.success("Successfully");
     }
 }

@@ -32,9 +32,7 @@ public class LoginFilter implements Filter {
                 "/api/login/customer",
                 "/api/login/admin",
                 "/api/login/supplier",
-                "/api/logout/customer",
-                "/api/logout/admin",
-                "/api/logout/supplier",
+                "/api/logout",
                 "/page/**"
         };
 
@@ -56,12 +54,13 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
+        log.info("xxxxxkkkkyyyy: {}", request.getSession().getAttribute("user"));
         //判断登陆状态，若已经登陆直接放行
-        if (request.getSession().getAttribute("customer") != null) {
-            log.info("用户已登录，username为：{}", request.getSession().getAttribute("customer"));
+        if (request.getSession().getAttribute("user") != null) {
+            log.info("用户已登录，username为：{}", request.getSession().getAttribute("user"));
 
-            String username = (String) request.getSession().getAttribute("customer");
-            BaseContext.setCurrentUsername(username);
+            String username = (String) request.getSession().getAttribute("user");
+            BaseContext.setCurrentUsername(username.split("-")[0]);
             long id = Thread.currentThread().getId();
             log.info("线程ID为：{}", id);
             filterChain.doFilter(request, response);
