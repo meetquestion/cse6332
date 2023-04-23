@@ -22,9 +22,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cart {
-    private int id;
+    private Long id;
     private Long customerId;
     private int productId;
+    // 1 有效，0：无效（已删除）
     private int status;
+    private int num;
 
 }

@@ -1,5 +1,7 @@
 package com.bupt.uta.Service.Impl;
 
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bupt.uta.Service.CartService;
 import com.bupt.uta.entity.Cart;
 import com.bupt.uta.entity.CartVo;
@@ -11,7 +13,7 @@ import java.util.List;
 
 
 @Service
-public class CartServiceImpl implements CartService {
+public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements CartService{
 
     @Autowired
     private CartMapper cartMapper;

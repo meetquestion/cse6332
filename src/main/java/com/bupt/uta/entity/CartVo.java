@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartVo {
-    private int cartId;
+    private Long cartId;
     private Long customerId;
     private int productId;
     private int status;
     private String productName;
     private String coding;
     private double price;
+    private String category;
     private String pic;
     private int num;
 }
