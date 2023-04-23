@@ -12,8 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Communicate {
-    private Long customerId;
-    private Long adminId;
+    private Long senderId;
+    private Long receiverId;
     private String content;
 
     @JsonFormat(locale="zh", timezone="GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
