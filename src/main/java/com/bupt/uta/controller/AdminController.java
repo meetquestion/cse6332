@@ -2,6 +2,7 @@ package com.bupt.uta.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bupt.uta.Service.AdminService;
+import com.bupt.uta.common.BaseContext;
 import com.bupt.uta.common.R;
 
 import com.bupt.uta.entity.Admin;
@@ -71,7 +72,7 @@ public class AdminController {
         request.getSession().setAttribute("user", admin1.getUsername()+"-"+admin1.getId());
         return R.success(admin1);
     }
-    @GetMapping("/logout")
+    @GetMapping("/logout/admin")
     public R<String> logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
         Integer count = (Integer) request.getSession().getAttribute("online");
