@@ -19,9 +19,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value="/category",method = RequestMethod.GET)
+    @RequestMapping(value="/allproduct",method = RequestMethod.GET)
     public R<List<Product>> getAllProducts(HttpServletRequest request){
         return R.success(productService.getAllProduct());
+    }
+
+    @RequestMapping(value = "/category/{type}",method = RequestMethod.GET)
+    public R<List<Product>> getCategoryProducts(@PathVariable String type){
+        System.out.println(type);
+        return R.success(productService.getCategoryProduct(type));
     }
 
     @RequestMapping(value = "/product/{id}",method = RequestMethod.GET)

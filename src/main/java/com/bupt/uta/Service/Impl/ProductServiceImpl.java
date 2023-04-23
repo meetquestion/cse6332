@@ -25,6 +25,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getCategoryProduct(String category){
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("category",category);
+        List<Product> productList=productMapper.selectList(wrapper);
+        return productList;
+    }
+
+    @Override
     public Product getProduct(long id) {
         Product product=productMapper.selectById(id);
         return product;
