@@ -98,6 +98,13 @@ public class CustomerController {
             return R.error("VerificationCode is wrong");
         }
         request.getSession().setAttribute("user", cus.getUsername()+"-"+cus.getId());
+
+        Integer count = (Integer) request.getSession().getAttribute("online");
+        if(count == null){
+            request.getSession().setAttribute("online", 1);
+        }else{
+            request.getSession().setAttribute("online", count +1);
+        }
         log.info("session:{} ", request.getSession().getAttribute("user"));
         return R.success(cus);
     }

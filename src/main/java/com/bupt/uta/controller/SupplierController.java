@@ -64,6 +64,14 @@ public class SupplierController {
             return R.error("Login failed. The password is wrong.");
         }
         request.getSession().setAttribute("user", admin1.getUsername()+"-"+admin1.getId());
+
+        Integer count = (Integer) request.getSession().getAttribute("online");
+        if(count == null){
+            request.getSession().setAttribute("online", 1);
+        }else{
+            request.getSession().setAttribute("online", count +1);
+        }
+
         log.info("supplier:{}", request.getSession().getAttribute("user"));
         return R.success(admin1);
     }
