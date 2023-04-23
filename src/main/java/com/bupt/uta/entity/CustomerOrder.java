@@ -4,16 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart {
+public class CustomerOrder {
     private Long id;
     private Long customerId;
     private Long productId;
-    // 1 有效，0：无效（已删除）
+    // 0:pay 1: return
     private int status;
-    private int num;
 
+    private Date modifyTime;
+    private Date createTime;
 }
