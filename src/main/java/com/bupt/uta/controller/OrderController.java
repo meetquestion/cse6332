@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bupt.uta.Service.CartService;
 import com.bupt.uta.Service.OrderService;
 import com.bupt.uta.common.R;
+import com.bupt.uta.entity.Cart;
 import com.bupt.uta.entity.CustomerOrder;
 import com.bupt.uta.entity.CustomerOrderVo;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,12 @@ public class OrderController {
                 order.setModifyTime(date);
             }
             orderService.saveBatch(orders);
+            for(CustomerOrder order : orders){
+                LambdaQueryWrapper<Cart> wrapper = new LambdaQueryWrapper<>();
+                wrapper.eq(Cart::getCustomerId, order.getCustomerId())
+                        .eq(Cart::getProductId,order.getProductId());
+                cartService.remove(wrapper);
+            }
         }catch (Exception e){
             log.error(e.getMessage());
             return R.error("error");
