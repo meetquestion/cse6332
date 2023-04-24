@@ -175,7 +175,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order/getOrder",method = RequestMethod.GET)
-    public R<List<CustomerOrder>> getCustomerOrderList(CustomerOrder customerOrder) {
+    public R<List<CustomerOrder>> getCustomerOrderList(@RequestBody CustomerOrder customerOrder) {
         try{
 
             if(customerOrder.getCustomerId()!=null){
@@ -194,7 +194,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order/get",method = RequestMethod.GET)
-    public R<List<OrderDetail>> getOrderDetailList(@RequestBody CustomerOrder customerOrder) {
+    public R<List<OrderDetail>> getOrderDetailList(CustomerOrder customerOrder) {
         try{
 
             List<OrderDetail> orderDetailList = orderService.getOrderDetailList(customerOrder);
