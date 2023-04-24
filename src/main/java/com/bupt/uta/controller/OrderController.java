@@ -175,7 +175,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order/getOrder",method = RequestMethod.GET)
-    public R<List<CustomerOrder>> getCustomerOrderList(@RequestBody CustomerOrder customerOrder) {
+    public R<List<CustomerOrder>> getCustomerOrderList(CustomerOrder customerOrder) {
         try{
 
             if(customerOrder.getCustomerId()!=null){
