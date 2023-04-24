@@ -5,10 +5,13 @@ import com.bupt.uta.Service.CartService;
 import com.bupt.uta.common.R;
 import com.bupt.uta.entity.Cart;
 import com.bupt.uta.entity.CartVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class CartController {
@@ -54,6 +57,7 @@ public class CartController {
                 return R.success(cart);
             }
         }catch (Exception e){
+            log.error(e.getMessage(), e);
             return R.error("error");
         }
     }
