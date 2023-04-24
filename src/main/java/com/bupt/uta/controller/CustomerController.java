@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -112,6 +113,12 @@ public class CustomerController {
     public R<String> logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
         return R.success("Successfully");
+    }
+
+    @GetMapping("/getAllCustomer")
+    public R<List<Customer>> getAllCustomer(){
+        List<Customer> list = customerService.list();
+        return R.success(list);
     }
 
 }
