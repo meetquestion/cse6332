@@ -20,4 +20,7 @@ public class Communicate {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    private String senderName;
+    private String receiverName;
+
 }
