@@ -21,10 +21,7 @@ public class CommunicateController {
 
     @Autowired
     private CommunicateService communicateService;
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private AdminService adminService;
+
 
     @RequestMapping(value = "/communicate/get/{senderId}/{receiverId}", method = RequestMethod.GET)
     public R<List<Communicate>> getCommunicate(@PathVariable Long senderId, @PathVariable Long receiverId){
@@ -42,7 +39,7 @@ public class CommunicateController {
     }
 
     @RequestMapping(value = "/communicate/post",method = RequestMethod.POST)
-    public R<Communicate> save(@RequestBody Communicate communicate){
+    public R<Communicate> save(Communicate communicate){
         if(communicate == null){
             return R.error("error");
         }
