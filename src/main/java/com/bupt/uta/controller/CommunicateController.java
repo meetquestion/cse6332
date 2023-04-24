@@ -39,7 +39,7 @@ public class CommunicateController {
     }
 
     @RequestMapping(value = "/communicate/post",method = RequestMethod.POST)
-    public R<Communicate> save(Communicate communicate){
+    public R<Communicate> save(@RequestBody Communicate communicate){
         if(communicate == null){
             return R.error("error");
         }
