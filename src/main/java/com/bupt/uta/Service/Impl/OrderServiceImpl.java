@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bupt.uta.Service.OrderService;
 import com.bupt.uta.entity.CustomerOrder;
 import com.bupt.uta.entity.CustomerOrderVo;
+import com.bupt.uta.entity.OrderDetail;
 import com.bupt.uta.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, CustomerOrder> im
     public List<CustomerOrderVo> getCount() {
         List<CustomerOrderVo> count = orderMapper.getCount();
         return  count;
+    }
+
+    @Override
+    public List<OrderDetail> getOrderDetailList(CustomerOrder customerOrder) {
+
+        try{
+            List<OrderDetail> orderDetailList = orderMapper.getOrderDetailList(customerOrder);
+            return orderDetailList;
+        }catch(Exception e){
+            log.error(e.getMessage());
+            return null;
+        }
+
     }
 
 

@@ -7,6 +7,7 @@ import com.bupt.uta.common.R;
 import com.bupt.uta.entity.Cart;
 import com.bupt.uta.entity.CustomerOrder;
 import com.bupt.uta.entity.CustomerOrderVo;
+import com.bupt.uta.entity.OrderDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -125,17 +126,17 @@ public class OrderController {
             return R.error("error");
         }
     }
-    // select all
-    @RequestMapping(value = "/order/get",method = RequestMethod.GET)
-    public R<List<CustomerOrder>> getOrderList() {
+    // select all 测试通过的，可以传column:value,也可以不传
+    /*@RequestMapping(value = "/order/get",method = RequestMethod.GET)
+    public R<List<CustomerOrder>> getOrderList(@RequestBody Map<String,Object> map) {
         try{
-            List<CustomerOrder> list = orderService.list();
+            List<CustomerOrder> list = orderService.listByMap(map);
             return R.success(list);
         }catch(Exception e){
             log.error(e.getMessage());
             return R.error("error");
         }
-    }
+    }*/
 
     //count 0:buy  1:return
     @RequestMapping(value = "/order/count",method = RequestMethod.GET)
@@ -188,6 +189,20 @@ public class OrderController {
             }
 
         }catch(Exception e){
+            return R.error("error");
+        }
+    }
+
+    @RequestMapping(value = "/order/get",method = RequestMethod.GET)
+    public R<List<OrderDetail>> getOrderDetailList(@RequestBody CustomerOrder customerOrder) {
+        try{
+
+            List<OrderDetail> orderDetailList = orderService.getOrderDetailList(customerOrder);
+            return R.success(orderDetailList);
+
+
+        }catch(Exception e){
+            log.error(e.getMessage());
             return R.error("error");
         }
     }
