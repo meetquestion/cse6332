@@ -28,10 +28,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, CustomerOrder> im
     }
 
     @Override
-    public List<OrderDetail> getOrderDetailList(CustomerOrder customerOrder) {
+    public List<OrderDetail> getOrderDetailList(Long customerId) {
 
         try{
-            List<OrderDetail> orderDetailList = orderMapper.getOrderDetailList(customerOrder);
+            List<OrderDetail> orderDetailList = orderMapper.getOrderDetailList(customerId);
             return orderDetailList;
         }catch(Exception e){
             log.error(e.getMessage());
