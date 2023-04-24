@@ -17,5 +17,5 @@ public interface OrderService extends IService<CustomerOrder> {
 
     List<CustomerOrderVo> getCount();
 
-    List<OrderDetail> getOrderDetailList(CustomerOrder customerOrder);
+    List<OrderDetail> getOrderDetailList( Long customerId);
 }

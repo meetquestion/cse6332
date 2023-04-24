@@ -34,8 +34,8 @@ public interface OrderMapper extends BaseMapper<CustomerOrder> {
                     "left join product pro on cor.product_id = pro.id " +
                     "left join customer cu on cor.customer_id = cu.id " +
                     "where 1=1" ,
-            " <if test='customerId !=null'>and cor.customer_id =#{customerId,jdbcType=BIGINT} </if>",
+            " <if test='customerId !=0'>and cor.customer_id =#{customerId,jdbcType=BIGINT} </if>",
             "</script>"
     })
-    List<OrderDetail> getOrderDetailList(CustomerOrder customerOrder);
+    List<OrderDetail> getOrderDetailList(Long customerId);
 }

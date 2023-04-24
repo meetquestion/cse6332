@@ -193,11 +193,11 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "/order/get",method = RequestMethod.GET)
-    public R<List<OrderDetail>> getOrderDetailList(CustomerOrder customerOrder) {
+    @RequestMapping(value = "/order/get/{customerId}",method = RequestMethod.GET)
+    public R<List<OrderDetail>> getOrderDetailList(@PathVariable Long customerId) {
         try{
 
-            List<OrderDetail> orderDetailList = orderService.getOrderDetailList(customerOrder);
+            List<OrderDetail> orderDetailList = orderService.getOrderDetailList(customerId);
             return R.success(orderDetailList);
 
 
