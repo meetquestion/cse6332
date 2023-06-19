@@ -3,13 +3,23 @@ server:
   address: 0.0.0.0
 spring:
   application:
-    name: CSE5335
+    name: CSE6332
+  mvc:
+    static-path-pattern: /static/**
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/cse5335?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: root
-      password: 123123
+      username: demo
+      password: root
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: utf-8
+    mode: LEGACYHTML5
+    cache: false
+    servelt:
+      content-type: text/html; charset=utf-8
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

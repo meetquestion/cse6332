@@ -13,11 +13,13 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
+
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("Start mapping static resource.");
         registry.addResourceHandler("/page/**").addResourceLocations("classpath:/page/");
         registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
     /**

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>quiz1</title>
+</head>
+<body>
+<h1>XiaopuJing 01563</h1>
+<img src="../static/imgs/np.jpg" />
+<table id="studentsTable">
+  <tr>
+    <thead>
+    <th>name</th>
+    <th>grade</th>
+    <th>id</th>
+    <th>notes</th>
+    <th>operation</th>
+    </thead>
+  </tr>
+
+</table>
+
+<h1>query</h1>
+
+<!-- Write a form to query by name -->
+<div>
+<form>
+  <label for="peopleName">name：</label>
+  <input type="text" id="peopleName" name="peopleName">
+  <button type="button" onclick="searchByName()">Search</button>
+</form>
+</div>
+<!-- Write a form to query based on ID interval values -->
+<div>
+<form>
+  <label for="startId">start id：</label>
+  <input type="number" id="startId" name="startId">
+  <label for="endId">max id：</label>
+  <input type="number" id="endId" name="endId">
+  <button type="button" onclick="searchById()">Serach</button>
+</form>
+</div>
+<!-- Write a form for querying based on grade interval values -->
+<div>
+ <form>
+  <label for="startGrade">start grade：</label>
+  <input type="number" id="startGrade" name="startGrade">
+  <label for="endGrade">end grade：</label>
+  <input type="number" id="endGrade" name="endGrade">
+  <button type="button" onclick="searchByGrade()">Search</button>
+ </form>
+</div>
+<h3>Add User</h3>
+<form id = "add" action="/save" method="post">
+  <input type="text" name="peopleName" placeholder="Enter name">
+  <input type="text" name="grade" placeholder="Enter grade">
+  <input type="text" name="id" placeholder="Enter id">
+  <input type="text" name="notes" placeholder="Enter notes">
+  <input type="submit" value="Save">
+</form>
+<h3>Update User</h3>
+<form id = "update" action="/save" method="post">
+  <input type="text" name="peopleName" placeholder="Enter name">
+  <input type="text" name="grade" placeholder="Enter grade">
+  <input type="text" name="id" placeholder="Enter id">
+  <input type="text" name="notes" placeholder="Enter notes">
+  <input type="submit" value="Update">
+</form>
+<script>
+  $(document).ready(function() {
+    loadStudents(); // 页面加载时调用函数，展示
+  });
+    // 查询列表的函数
+    function loadStudents() {
+      $.ajax({
+        url: '/api/quiz1List',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+          $('#studentsTable tbody').empty(); // clear table contents
+
+          // 循环遍历数据，并添加到表格中
+          $.each(data.data, function (index, item) {
+            var row = '<tr>' +
+                    '<td>' + item.peopleName + '</td>' +
+                    '<td>' + item.grade + '</td>' +
+                    '<td>' + item.id + '</td>' +
+                    '<td>' + item.notes + '</td>' +
+                    '<td><button type="button" class="btnClick">Delete</button></td>' +
+                    '</tr>';
+            $('#studentsTable tbody').append(row);
+          });
+          /*$('.btnClick').off('click').on('click'.function(){
+            const peopleName = $(this).data('peopleName');
+            deleteStudent(peopleName);
+          })*/
+        },
+        error: function (xhr, status, error) {
+          console.error('Failed to load students:', error);
+        }
+      });
+    }
+  // 给“删除”按钮绑定单击事件
+  $('#studentsTable').on('click', 'button.btnClick', function() {
+    // 保存当前选中要删除的项
+    selectedItem = $(this).closest('tr');
+    const peopleName = selectedItem.find('td:first-child').text()
+    console.log(peopleName);
+    // 显示确认对话框
+    if (confirm("Are you sure you want to delete this item？")) {
+      // Ajax
+      var url = '/api/quiz1/delete/'+peopleName;
+      $.ajax({
+        type: 'PUT',
+        url: url,
+        dataType: 'json',
+        success: function(result) {
+          // 删除成功后从表格中删除该行
+          selectedItem.remove();
+          selectedItem = null;
+        },
+        error: function(xhr, status, error) {
+          // 删除失败时弹出错误消息
+          alert('failed：' + error);
+        }
+      });
+    }
+  });
+    /*// delete
+    function deleteStudent(peopleName) {
+      $.ajax({
+        url: '/api/quiz1/delete/' + peopleName,
+        method: 'DELETE',
+        success: function (data) {
+          loadStudents(); // 成功删除后重新加载列表
+          alert('success！');
+        },
+        error: function (xhr, status, error) {
+          console.error('Failed to delete student:', error);
+          alert('failed！');
+        }
+      });
+    }
+
+    // 点击“删除”按钮时调用函数，弹出确认对话框并删除
+    $(document).on('click', '.deleteStudent', function () {
+      const peopleName = $(this).data('peopleName');
+      if (confirm('Are you sure？')) {
+        deleteStudent(peopleName);
+      }
+    });*/
+
+    // Functions for querying students by name
+    function searchByName() {
+      const peopleName = $('#peopleName').val();
+      console.log(peopleName);
+      $.ajax({
+        url: '/api/quiz1/queryByName/' + peopleName,
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+          $('#studentsTable tbody').empty(); // 清空表格内容
+          console.log(data.data);
+          // 循环遍历数据，并添加到表格中
+          $.each(data.data, function (index, item) {
+            console.log(item);
+            console.log(item.peopleName);
+            var row = '<tr>' +
+                    '<td>' + item.peopleName + '</td>' +
+                    '<td>' + item.grade + '</td>' +
+                    '<td>' + item.id + '</td>' +
+                    '<td>' + item.notes + '</td>' +
+                    '<td><button type="button" class="btnClick">Delete</button></td>' +
+                    '</tr>';
+            $('#studentsTable tbody').append(row);
+          });
+          /*$('.btnClick').off('click').on('click'.function(){
+            const peopleName = $(this).data('peopleName');
+            deleteStudent(peopleName);
+          })*/
+        },
+        error: function (xhr, status, error) {
+          console.error('Failed to load students:', error);
+        }
+      });
+    }
+
+  function searchById() {
+    var startId = $('#startId').val();
+    var endId = $('#endId').val();
+    $.ajax({
+      url: '/api/quiz1/queryById/' + startId +'/'+ endId,
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        $('#studentsTable tbody').empty(); // 清空表格内容
+
+        // 循环遍历数据，并添加到表格中
+        $.each(data.data, function (index, item) {
+          var row = '<tr>' +
+                  '<td>' + item.peopleName + '</td>' +
+                  '<td>' + item.grade + '</td>' +
+                  '<td>' + item.id + '</td>' +
+                  '<td>' + item.notes + '</td>' +
+                  '<td><button type="button" class="btnClick">Delete</button></td>' +
+                 /* '<td><button class="delete">删除</button></td>'+*/
+                  '</tr>';
+          $('#studentsTable tbody').append(row);
+        });
+        /*$('.btnClick').off('click').on('click'.function(){
+          const peopleName = $(this).data('peopleName');
+          deleteStudent(peopleName);
+        })*/
+      },
+      error: function (xhr, status, error) {
+        console.error('Failed to load students:', error);
+      }
+    });
+  }
+  function searchByGrade() {
+    var startGrade = $('#startGrade').val();
+    var endGrade = $('#endGrade').val();
+    $.ajax({
+      url: '/api/quiz1/queryByGrade/' + startGrade +'/' + endGrade,
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        $('#studentsTable tbody').empty(); // 清空表格内容
+
+        // 循环遍历数据，并添加到表格中
+        $.each(data.data, function (index, item) {
+          var row = '<tr>' +
+                  '<td>' + item.peopleName + '</td>' +
+                  '<td>' + item.grade + '</td>' +
+                  '<td>' + item.id + '</td>' +
+                  '<td>' + item.notes + '</td>' +
+                  '<td><button type="button" class="btnClick">Delete</button></td>' +
+                  '</tr>';
+          $('#studentsTable tbody').append(row);
+        });
+        /*$('.btnClick').off('click').on('click'.function(){
+          const peopleName = $(this).data('peopleName');
+          deleteStudent(peopleName);
+        })*/
+      },
+      error: function (xhr, status, error) {
+        console.error('Failed to load students:', error);
+      }
+    });
+  }
+
+  $('#add').submit(function(event) {
+    event.preventDefault();
+
+    const formData = $(this).serializeArray();
+    const jsonData = {};
+
+    $.each(formData, function(index, field){
+      jsonData[field.name] = field.value;
+    });
+
+    $.ajax({
+      url: '/api/quiz1/save',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(jsonData),
+      success: function(data) {
+        loadStudents();
+        console.log(data);
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  });
+
+  $('#update').submit(function(event) {
+    event.preventDefault();
+
+    const formData = $(this).serializeArray();
+    const jsonData = {};
+
+    $.each(formData, function(index, field){
+      jsonData[field.name] = field.value;
+    });
+
+    $.ajax({
+      url: '/api/quiz1/save',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(jsonData),
+      success: function(data) {
+        loadStudents();
+        console.log(data);
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  });
+
+
+</script>
+<style type="text/css">
+  table{
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td{
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even){
+    background-color: #f2f2f2;
+  }
+  img{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-right: 10px;
+  }
+  form{
+    margin-top: 20px;
+  }
+</style>
+</body>
+</html>

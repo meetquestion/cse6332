@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 @Slf4j
 @RestController
@@ -25,6 +26,9 @@ public class CartController {
             return R.error("error");
         }
         try{
+
+            PriorityQueue<Integer> q = new PriorityQueue<>((o1, o2)->o2.compareTo(o1));
+
             Cart cart = new Cart();
             cart.setCustomerId(customerId);
             List<CartVo> cartVoList = cartService.getCartVoList(cart);

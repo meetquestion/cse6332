@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>quiz1</title>
+</head>
+<body>
+<h1>XiaopuJing 01563</h1>
+<img src="../static/imgs/np.jpg"/>
+<table id="studentsTable">
+    <tr>
+        <thead>
+        <th>name</th>
+        <th>grade</th>
+        <th>id</th>
+        <th>notes</th>
+        <th>operation</th>
+        </thead>
+    </tr>
+    <tbody></tbody>
+
+</table>
+
+<h1>query</h1>
+
+<!-- 编写根据姓名查询的表单 -->
+<div>
+    <form>
+        <label for="peopleName">name：</label>
+        <input type="text" id="peopleName" name="peopleName">
+        <button type="button" onclick="searchByName()">Search</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        loadStudents(); // 页面加载时调用函数，展示
+    });
+
+    // 查询列表的函数
+    function loadStudents() {
+        $.ajax({
+            url: '/api/quiz1List',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#studentsTable tbody').empty(); // clear table contents
+
+                // 循环遍历数据，并添加到表格中
+                $.each(data.data, function (index, item) {
+                    var row = '<tr>' +
+                        '<td>' + item.peopleName + '</td>' +
+                        '<td>' + item.grade + '</td>' +
+                        '<td>' + item.id + '</td>' +
+                        '<td>' + item.notes + '</td>' +
+                        '<td><button onclick="searchByName()">删除</button></td>' +
+                        '</tr>';
+                    $('#studentsTable tbody').append(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to load students:', error);
+            }
+        });
+    }
+
+    // Functions for querying students by name
+    function searchByName() {
+        const peopleName = $('#peopleName').val();
+        console.log(peopleName);
+        $.ajax({
+            url: '/api/quiz1/queryByName/' + peopleName,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#studentsTable tbody').empty(); // 清空表格内容
+                console.log(data.data);
+                // 循环遍历数据，并添加到表格中
+                $.each(data.data, function (index, item) {
+                    var row = '<tr>' +
+                        '<td>' + item.peopleName + '</td>' +
+                        '<td>' + item.grade + '</td>' +
+                        '<td>' + item.id + '</td>' +
+                        '<td>' + item.notes + '</td>' +
+                        '<td><button onclick="searchByName()">删除</button></td>' +
+                        '</tr>';
+                    $('#studentsTable tbody').append(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to load students:', error);
+            }
+        });
+    }
+</script>
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    img {
+        width: 100px;
+        height: 100px;
+        float: left;
+        margin-right: 10px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+</style>
+</body>
+</html>

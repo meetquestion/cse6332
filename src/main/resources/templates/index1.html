@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>6332</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // 获取JSON数据并绑定到table上
+            $.ajax({
+                type: 'GET',
+                url: '/api/peopleList',
+                success: function(data){
+                    console.log(data.data);
+                    var table = '<table><tr><th>Name</th><th>State</th><th>Salary</th><th>Grade</th><th>Room</th><th>Telnum</th><!--<th>Picture</th>--><th>Keywords</th><th>Edit</th><th>Delete</th></tr>';
+                    $.each(data.data, function(i, item){
+                        table += '<tr>' +
+                            '<td>' + item.peopleName + '</td>' +
+                            '<td>' + item.peopleState + '</td>' +
+                            '<td>' + item.salary + '</td>' +
+                            '<td>' + item.grade + '</td>' +
+                            '<td>' + item.room + '</td>' +
+                            '<td>' + item.telnum + '</td>' +
+                            /*'<td><img src="' + item.picture + '"></td>' +*/
+                            '<td>' + item.keywords + '</td>' +
+                            '<td><a href="/edit?id=' + item.id + '">Edit</a></td>' +
+                            '<td><a href="#" onclick="deleteUser(' + item.id + ')">Delete</a></td>' +
+                            '</tr>';
+                    });
+                    table += '</table>';
+                    $('body').append(table);
+                }
+            });
+
+            // 处理删除操作
+            window.deleteUser = function(id){
+                if(confirm('Are you sure to delete this user?')){
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/delete/' + id,
+                        success: function(data){
+                            alert('User has been deleted!');
+                            location.reload();
+                        },
+                        error: function(data){
+                            alert('Error: ' + data.responseText);
+                        }
+                    });
+                }
+            };
+
+            // 处理查询图片操作
+            $('#search-form').submit(function(e){
+                e.preventDefault();
+                var name = $('#search-name').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/getPicture?name=' + name,
+                    success: function(data){
+                        $('#picture').attr('src', data);
+                    },
+                    error: function(data){
+                        alert('Error: ' + data.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    <style type="text/css">
+        table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td{
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+        img{
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin-right: 10px;
+        }
+        form{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Jing Xiaopu 01563</h1>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="Upload">
+</form>
+
+<h2>Parsed Data</h2>
+<!--<img src="../static/imgs/dar.jpg" />-->
+<div>
+    <form id="search-form">
+        <label for="search-name">Search picture by name:</label>
+        <input type="text" id="search-name">
+        <button type="submit">Search</button>
+    </form>
+    <!--<img id="picture" src="" alt="Picture">-->
+</div>
+</body>
+</html>
