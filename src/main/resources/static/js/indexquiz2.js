@@ -32,14 +32,14 @@ console.error('Failed to load students:', error);
 });
 }*/
 // 给“删除”按钮绑定单击事件
-function deleteItem(obj) {
+function deleteItem(quiz2Time) {
     // 保存当前选中要删除的项
-    debugger
-    //let dom = $("#"+quiz2Time);
+    //debugger
+    let selectedItem = $("#"+quiz2Time);
     //dom.remove();
     //return;
-    let selectedItem = $(obj).closest('tr');
-    let quiz2Time = selectedItem.find('td:first-child').text();
+    //let selectedItem = $(obj).closest('tr');
+    //let quiz2Time = selectedItem.find('td:first-child').text();
     //懒懒的
    // let quiz2Time = selectedItem.find('td:first-child').text();
 
@@ -115,14 +115,14 @@ function searchByTime(quiz2Time) {
                         '<td>' + item.mag + '</td>' +
                         '<td>' + item.net + '</td>' +
                         '<td>' + item.place + '</td>' +
-                        "<td><button type='button' class='btnClick' >Delete</button></td>"+
-                        //"<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\")' class='btnClick' >Delete</button></td>"+
+                        //"<td><button type='button' class='btnClick' >Delete</button></td>"+
+                        "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\")' class='btnClick' >Delete</button></td>"+
                         '</tr>';
                     $('#studentsTable tbody').append(row);
                 });
-                $('#studentsTable').on('click', 'button.btnClick', function () {
+                /*$('#studentsTable').on('click', 'button.btnClick', function () {
                     deleteItem(this);
-                });
+                });*/
             }
         },
         error: function (xhr, status, error) {
@@ -144,7 +144,7 @@ function searchByMag() {
 
             // 循环遍历数据，并添加到表格中
             $.each(data.data, function (index, item) {
-                var row = '<tr>' +
+                var row = '<tr id="'+item.quiz2Time+'">' +
                     '<td>' + item.quiz2Time + '</td>' +
                     '<td>' + item.latitude + '</td>' +
                     '<td>' + item.longitude + '</td>' +
