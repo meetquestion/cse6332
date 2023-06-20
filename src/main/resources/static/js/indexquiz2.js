@@ -32,14 +32,14 @@ console.error('Failed to load students:', error);
 });
 }*/
 // 给“删除”按钮绑定单击事件
-function deleteItem(quiz2Time,obj) {
+function deleteItem(obj) {
     // 保存当前选中要删除的项
     debugger
-    let dom = $("#"+quiz2Time);
+    //let dom = $("#"+quiz2Time);
     //dom.remove();
     //return;
     let selectedItem = $(obj).closest('tr');
-    let quiz = selectedItem.find('td:first-child').text();
+    let quiz2Time = selectedItem.find('td:first-child').text();
     //懒懒的
    // let quiz2Time = selectedItem.find('td:first-child').text();
 
@@ -115,14 +115,14 @@ function searchByTime(quiz2Time) {
                         '<td>' + item.mag + '</td>' +
                         '<td>' + item.net + '</td>' +
                         '<td>' + item.place + '</td>' +
-                        //"<td><button type='button' class='btnClick' >Delete</button></td>"+
-                        "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\",this)' class='btnClick' >Delete3</button></td>"+
+                        "<td><button type='button' class='btnClick' >Delete</button></td>"+
+                        //"<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\")' class='btnClick' >Delete</button></td>"+
                         '</tr>';
                     $('#studentsTable tbody').append(row);
                 });
-                //$('#studentsTable').on('click', 'button.btnClick', function () {
-                    //deleteItem();
-                //});
+                $('#studentsTable').on('click', 'button.btnClick', function () {
+                    deleteItem(this);
+                });
             }
         },
         error: function (xhr, status, error) {
@@ -152,7 +152,7 @@ function searchByMag() {
                     '<td>' + item.net + '</td>' +
                     '<td>' + item.place + '</td>' +
                    // '<td><button type="button" class="btnClick" >Delete</button></td>' +
-                    "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\",this)' class='btnClick' >Delete2</button></td>"+
+                    "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\")' class='btnClick' >Delete</button></td>"+
                     '</tr>';
                 $('#studentsTable tbody').append(row);
             });
