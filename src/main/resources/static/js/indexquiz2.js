@@ -32,9 +32,16 @@ console.error('Failed to load students:', error);
 });
 }*/
 // 给“删除”按钮绑定单击事件
-function deleteItem(quiz2Time) {
+function deleteItem(quiz2Time,obj) {
     // 保存当前选中要删除的项
-    var selectedItem = $(this).closest('tr');
+    debugger
+    let dom = $("#"+quiz2Time);
+    //dom.remove();
+    //return;
+    let selectedItem = $(obj).closest('tr');
+    let quiz = selectedItem.find('td:first-child').text();
+    //懒懒的
+   // let quiz2Time = selectedItem.find('td:first-child').text();
 
     // 显示确认对话框
     if (confirm("Are you sure you want to delete this item？")) {
@@ -46,6 +53,7 @@ function deleteItem(quiz2Time) {
             dataType: 'json',
             success: function (result) {
                 // 删除成功后从表格中删除该行
+                alert("success!");
                 selectedItem.remove();
                 selectedItem = null;
             },
@@ -81,8 +89,10 @@ deleteStudent(quiz2Time);
 });*/
 
 // Functions for querying students by name
-function searchByTime() {
-    const quiz2Time = $('#quiz2Time').val();
+function searchByTime(quiz2Time) {
+    if(quiz2Time == null || quiz2Time == ''){
+        quiz2Time = $('#quiz2Time').val();
+    }
     console.log(quiz2Time);
     $.ajax({
         url: '/api/quiz2/queryByTime/' + quiz2Time,
@@ -98,20 +108,21 @@ function searchByTime() {
                 $.each(data.data, function (index, item) {
                     console.log(item);
                     console.log(item.quiz2Time);
-                    var row = '<tr>' +
+                    var row = '<tr id="'+item.quiz2Time+'">' +
                         '<td>' + item.quiz2Time + '</td>' +
                         '<td>' + item.latitude + '</td>' +
                         '<td>' + item.longitude + '</td>' +
                         '<td>' + item.mag + '</td>' +
                         '<td>' + item.net + '</td>' +
                         '<td>' + item.place + '</td>' +
-                        '<td><button type="button" class="btnClick">Delete</button></td>' +
+                        //"<td><button type='button' class='btnClick' >Delete</button></td>"+
+                        "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\",this)' class='btnClick' >Delete3</button></td>"+
                         '</tr>';
                     $('#studentsTable tbody').append(row);
-                    $('#studentsTable').on('click', 'button.btnClick', function () {
-                        deleteItem(item.quiz2Time);
-                    });
                 });
+                //$('#studentsTable').on('click', 'button.btnClick', function () {
+                    //deleteItem();
+                //});
             }
         },
         error: function (xhr, status, error) {
@@ -140,13 +151,10 @@ function searchByMag() {
                     '<td>' + item.mag + '</td>' +
                     '<td>' + item.net + '</td>' +
                     '<td>' + item.place + '</td>' +
-                    '<td><button type="button" class="btnClick">Delete</button></td>' +
-                    /* '<td><button class="delete">删除</button></td>'+*/
+                   // '<td><button type="button" class="btnClick" >Delete</button></td>' +
+                    "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\",this)' class='btnClick' >Delete2</button></td>"+
                     '</tr>';
                 $('#studentsTable tbody').append(row);
-                $('#studentsTable').on('click', 'button.btnClick', function () {
-                    deleteItem(item.quiz2Time);
-                });
             });
 
         },
@@ -156,82 +164,88 @@ function searchByMag() {
     });
 }
 
-$('#add').submit(function (event) {
-    event.preventDefault();
+$(document).ready(function() {
+    $('#add').submit(function (event) {
+        event.preventDefault();
 
-    const formData = $(this).serializeArray();
-    const jsonData = {};
+        const formData = $(this).serializeArray();
+        const jsonData = {};
 
-    $.each(formData, function (index, field) {
-        jsonData[field.name] = field.value;
-    });
+        $.each(formData, function (index, field) {
+            jsonData[field.name] = field.value;
+        });
 
-    $.ajax({
-        url: '/api/quiz2/save',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(jsonData),
-        success: function (data) {
-            alert('Success!');
-            console.log(data);
-        },
-        error: function (error) {
-            console.error(error);
-        }
-    });
-});
-
-$('#update').submit(function (event) {
-    event.preventDefault();
-
-    const formData = $(this).serializeArray();
-    const jsonData = {};
-
-    $.each(formData, function (index, field) {
-        jsonData[field.name] = field.value;
-    });
-
-    $.ajax({
-        url: '/api/quiz2/save',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(jsonData),
-        success: function (data) {
-            alert('Success!');
-            console.log(data);
-        },
-        error: function (error) {
-            console.error(error);
-        }
+        $.ajax({
+            url: '/api/quiz2/save',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonData),
+            success: function (data) {
+                alert('Success!');
+                console.log(data);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     });
 });
+$(document).ready(function() {
+    $('#update').submit(function (event) {
+        event.preventDefault();
 
-$('#updateMag').submit(function (event) {
-    event.preventDefault();
+        const formData = $(this).serializeArray();
+        const jsonData = {};
 
-    const formData = $(this).serializeArray();
-    const jsonData = {};
+        $.each(formData, function (index, field) {
+            jsonData[field.name] = field.value;
+        });
 
-    $.each(formData, function (index, field) {
-        jsonData[field.name] = field.value;
+        $.ajax({
+            url: '/api/quiz2/save',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonData),
+            success: function (data) {
+                alert('Success!');
+                console.log(data);
+                console.log(data.data.quiz2Time);
+                searchByTime(data.data.quiz2Time);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     });
+});
+$(document).ready(function (){
+    $('#updateMag').submit(function (event) {
+        event.preventDefault();
 
-    $.ajax({
-        url: '/api/quiz2/addMagNum',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(jsonData),
-        success: function (data) {
-            alert('Success!');
-            // 创建新行
-            var newRow = '<p>' + 'count:' + data.data + '</p>';
-            // 将新行追加到表格中
-            $('#updateMag').append(newRow);
-            console.log(data);
-        },
-        error: function (error) {
-            console.error(error);
-        }
+        const formData = $(this).serializeArray();
+        const jsonData = {};
+
+        $.each(formData, function (index, field) {
+            jsonData[field.name] = field.value;
+        });
+        $.ajax({
+            url: '/api/quiz2/addMagNum',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonData),
+            success: function (data) {
+                alert('Success!');
+                //$('#updateMag').append().empty();
+                // 创建新行
+                var newRow = '<p>' + 'count:' + data.data + '</p>';
+                // 将新行追加到表格中
+                $('#updateMag').append(newRow);
+                console.log(data);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
     });
 });
 
