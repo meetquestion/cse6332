@@ -4,7 +4,7 @@ loadStudents(); // 页面加载时调用函数，展示
 /*// 查询列表的函数
 function loadStudents() {
 $.ajax({
-    url: '/api/quiz2List',
+    url: '/api/quiz3List',
     method: 'GET',
     dataType: 'json',
     success: function (data) {
@@ -13,7 +13,7 @@ $.ajax({
         // 循环遍历数据，并添加到表格中
         $.each(data.data, function (index, item) {
             var row = '<tr>' +
-                '<td>' + item.quiz2Time + '</td>' +
+                '<td>' + item.quiz3Time + '</td>' +
                 '<td>' + item.grade + '</td>' +
                 '<td>' + item.id + '</td>' +
                 '<td>' + item.notes + '</td>' +
@@ -22,8 +22,8 @@ $.ajax({
             $('#studentsTable tbody').append(row);
         });
         /!*$('.btnClick').off('click').on('click'.function(){
-        const quiz2Time = $(this).data('quiz2Time');
-        deleteStudent(quiz2Time);
+        const quiz3Time = $(this).data('quiz3Time');
+        deleteStudent(quiz3Time);
     })*!/
 },
 error: function (xhr, status, error) {
@@ -32,21 +32,21 @@ console.error('Failed to load students:', error);
 });
 }*/
 // 给“删除”按钮绑定单击事件
-function deleteItem(quiz2Time) {
+function deleteItem(city) {
     // 保存当前选中要删除的项
     //debugger
-    let selectedItem = $("#"+quiz2Time);
+    let selectedItem = $("#"+city);
     //dom.remove();
     //return;
     //let selectedItem = $(obj).closest('tr');
-    //let quiz2Time = selectedItem.find('td:first-child').text();
+    //let quiz3Time = selectedItem.find('td:first-child').text();
     //懒懒的
-   // let quiz2Time = selectedItem.find('td:first-child').text();
+   // let quiz3Time = selectedItem.find('td:first-child').text();
 
     // 显示确认对话框
     if (confirm("Are you sure you want to delete this item？")) {
         // Ajax
-        var url = '/api/quiz2/delete/' + quiz2Time;
+        var url = '/api/quiz3/delete/' + city;
         $.ajax({
             type: 'PUT',
             url: url,
@@ -65,9 +65,9 @@ function deleteItem(quiz2Time) {
     }
 }
 /*// delete
-function deleteStudent(quiz2Time) {
+function deleteStudent(quiz3Time) {
 $.ajax({
-    url: '/api/quiz2/delete/' + quiz2Time,
+    url: '/api/quiz3/delete/' + quiz3Time,
     method: 'DELETE',
     success: function (data) {
         loadStudents(); // 成功删除后重新加载列表
@@ -82,20 +82,20 @@ $.ajax({
 
 // 点击“删除”按钮时调用函数，弹出确认对话框并删除
 $(document).on('click', '.deleteStudent', function () {
-const quiz2Time = $(this).data('quiz2Time');
+const quiz3Time = $(this).data('quiz3Time');
 if (confirm('Are you sure？')) {
-deleteStudent(quiz2Time);
+deleteStudent(quiz3Time);
 }
 });*/
 
 // Functions for querying students by name
-function searchByTime(quiz2Time) {
-    if(quiz2Time == null || quiz2Time == ''){
-        quiz2Time = $('#quiz2Time').val();
+function searchByTime(city) {
+    if(city == null || city == ''){
+        city = $('#city').val();
     }
-    console.log(quiz2Time);
+    console.log(city);
     $.ajax({
-        url: '/api/quiz2/queryByTime/' + quiz2Time,
+        url: '/api/quiz3/queryByTime/' + city,
         method: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -107,16 +107,14 @@ function searchByTime(quiz2Time) {
                 // 循环遍历数据，并添加到表格中
                 $.each(data.data, function (index, item) {
                     console.log(item);
-                    console.log(item.quiz2Time);
-                    var row = '<tr id="'+item.quiz2Time+'">' +
-                        '<td>' + item.quiz2Time + '</td>' +
-                        '<td>' + item.latitude + '</td>' +
-                        '<td>' + item.longitude + '</td>' +
-                        '<td>' + item.mag + '</td>' +
-                        '<td>' + item.net + '</td>' +
-                        '<td>' + item.place + '</td>' +
-                        //"<td><button type='button' class='btnClick' >Delete</button></td>"+
-                        "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\")' class='btnClick' >Delete</button></td>"+
+                    var row = '<tr id="'+item.city+'">' +
+                        '<td>' + item.city + '</td>' +
+                        '<td>' + item.state + '</td>' +
+                        '<td>' + item.population + '</td>' +
+                        '<td>' + item.lat + '</td>' +
+                        '<td>' + item.lon + '</td>' +
+                        // '<td><button type="button" class="btnClick" >Delete</button></td>' +
+                        "<td><button type='button' onclick='deleteItem(\""+item.city+"\")' class='btnClick' >Delete</button></td>"+
                         '</tr>';
                     $('#studentsTable tbody').append(row);
                 });
@@ -134,9 +132,9 @@ function searchByTime(quiz2Time) {
 function searchByMag() {
     var startId = $('#minMag').val();
     var endId = $('#maxMag').val();
-    var net = $('#net').val();
+   /* var net = $('#net').val();*/
     $.ajax({
-        url: '/api/quiz2/queryByMag/' + startId + '/' + endId + '/' + net,
+        url: '/api/quiz3/queryByMag/' + startId + '/' + endId ,
         method: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -144,15 +142,47 @@ function searchByMag() {
 
             // 循环遍历数据，并添加到表格中
             $.each(data.data, function (index, item) {
-                var row = '<tr id="'+item.quiz2Time+'">' +
-                    '<td>' + item.quiz2Time + '</td>' +
-                    '<td>' + item.latitude + '</td>' +
-                    '<td>' + item.longitude + '</td>' +
-                    '<td>' + item.mag + '</td>' +
-                    '<td>' + item.net + '</td>' +
-                    '<td>' + item.place + '</td>' +
+                var row = '<tr id="'+item.city+'">' +
+                    '<td>' + item.city + '</td>' +
+                    '<td>' + item.state + '</td>' +
+                    '<td>' + item.population + '</td>' +
+                    '<td>' + item.lat + '</td>' +
+                    '<td>' + item.lon + '</td>' +
                    // '<td><button type="button" class="btnClick" >Delete</button></td>' +
-                    "<td><button type='button' onclick='deleteItem(\""+item.quiz2Time+"\")' class='btnClick' >Delete</button></td>"+
+                    "<td><button type='button' onclick='deleteItem(\""+item.city+"\")' class='btnClick' >Delete</button></td>"+
+                    '</tr>';
+                $('#studentsTable tbody').append(row);
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.error('Failed to load students:', error);
+        }
+    });
+}
+
+function searchByNum() {
+    var startId = $('#minMag2').val();
+    var endId = $('#maxMag2').val();
+    var num = $('#num').val();
+    /* var net = $('#net').val();*/
+    $.ajax({
+        url: '/api/quiz3/randomQuery/' + startId + '/' + endId +'/' + num ,
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            $('#studentsTable tbody').empty(); // 清空表格内容
+
+            // 循环遍历数据，并添加到表格中
+            $.each(data.data, function (index, item) {
+                var row = '<tr id="'+item.city+'">' +
+                    '<td>' + item.city + '</td>' +
+                    '<td>' + item.state + '</td>' +
+                    '<td>' + item.population + '</td>' +
+                    '<td>' + item.lat + '</td>' +
+                    '<td>' + item.lon + '</td>' +
+                    // '<td><button type="button" class="btnClick" >Delete</button></td>' +
+                    "<td><button type='button' onclick='deleteItem(\""+item.city+"\")' class='btnClick' >Delete</button></td>"+
                     '</tr>';
                 $('#studentsTable tbody').append(row);
             });
@@ -176,7 +206,7 @@ $(document).ready(function() {
         });
 
         $.ajax({
-            url: '/api/quiz2/save',
+            url: '/api/quiz3/save',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(jsonData),
@@ -202,15 +232,15 @@ $(document).ready(function() {
         });
 
         $.ajax({
-            url: '/api/quiz2/save',
+            url: '/api/quiz3/save',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(jsonData),
             success: function (data) {
                 alert('Success!');
                 console.log(data);
-                console.log(data.data.quiz2Time);
-                searchByTime(data.data.quiz2Time);
+                console.log(data.data.quiz3Time);
+                searchByTime(data.data.quiz3Time);
             },
             error: function (error) {
                 console.error(error);
@@ -229,7 +259,7 @@ $(document).ready(function (){
             jsonData[field.name] = field.value;
         });
         $.ajax({
-            url: '/api/quiz2/addMagNum',
+            url: '/api/quiz3/addMagNum',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(jsonData),

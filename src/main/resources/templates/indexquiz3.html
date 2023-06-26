@@ -6,7 +6,7 @@
   <title>quiz2</title>
   <link rel="stylesheet" href = "/static/css/indexquiz2.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="/static/js/indexquiz2.js"></script>
+  <script src="/static/js/indexquiz3.js"></script>
 </head>
 <body>
 <h1>Xiaopu Jing 01563</h1>
@@ -14,13 +14,11 @@
 <table id="studentsTable">
   <tr>
     <thead>
-    <th>time</th>
-    <th>latitude</th>
-    <th>longitude</th>
-    <th>mag</th>
-    <th>net</th>
-    <th>place</th>
-    <th>operation</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Population</th>
+    <th>lat</th>
+    <th>lon</th>
     </thead>
   </tr>
 
@@ -29,27 +27,45 @@
 <h1>query</h1>
 
 <!-- Write a form to query by name -->
+<h3>query by city</h3>
 <div>
 <form>
-  <label for="quiz2Time" placeholder="Enter name">time：</label>
-  <input type="text" id="quiz2Time" name="quiz2Time">
+  <label for="city" placeholder="Enter name">City：</label>
+  <input type="text" id="city" name="city">
   <button type="button" onclick="searchByTime()">Search</button>
 </form>
 </div>
-<!-- Write a form to query based on ID interval values -->
+<!--
+ Write a form to query based on ID interval values
+-->
+<h3>query by population</h3>
 <div>
 <form>
-  <label for="minMag">min mag：</label>
-  <input type="number" id="minMag" name="minMag">
-  <label for="maxMag">max mag：</label>
-  <input type="number" id="maxMag" name="maxMag">
-  <label for="net">net：</label>
-  <input type="text" id="net" name="net">
+  <label for="minMag">min：</label>
+  <input type="number" id="minMag" name="minNum">
+  <label for="maxMag">max：</label>
+  <input type="number" id="maxMag" name="maxNum">
+ <!-- <label for="net">net：</label>
+  <input type="text" id="net" name="net">-->
   <button type="button" onclick="searchByMag()">Serach</button>
 </form>
 </div>
+
+<h3>query by population random N</h3>
+<div>
+  <form>
+    <label for="minMag">min：</label>
+    <input type="number" id="minMag2" name="minNum">
+    <label for="maxMag">max：</label>
+    <input type="number" id="maxMag2" name="maxNum">
+    <label for="num">N：</label>
+    <input type="number" id="num" name="n">
+    <button type="button" onclick="searchByNum()">Serach</button>
+  </form>
+</div>
+
 <!-- Write a form for querying based on grade interval values -->
-<h3>Add Data</h3>
+<!--<h3>Add Data</h3>
 <form id = "add">
   <input type="text" name="quiz2Time" placeholder="Enter time">
   <input type="text" name="latitude" placeholder="Enter latitude">
@@ -58,8 +74,8 @@
   <input type="text" name="net" placeholder="Enter net">
   <input type="text" name="place" placeholder="Enter place">
   <input type="submit" value="Save">
-</form>
-<h3>Update Data</h3>
+</form>-->
+<!--<h3>Update Data</h3>
 <form id = "update" >
   <input type="text" name="quiz2Time" placeholder="Enter time">
   <input type="text" name="latitude" placeholder="Enter latitude">
@@ -68,19 +84,43 @@
   <input type="text" name="net" placeholder="Enter net">
   <input type="text" name="place" placeholder="Enter place">
   <input type="submit" value="Update">
-</form>
-<h3>Update Mag</h3>
+</form>-->
+<h3>Add Population</h3>
 <form id = "updateMag">
-  <label for="minMag">min mag：</label>
-  <input type="text" id="minMag1" name="minMag">
-  <label for="maxMag">max mag：</label>
-  <input type="text" id="maxMag1" name="maxMag">
-  <label for="net">net：</label>
-  <input type="text" id="net1" name="net">
+  <label for="minMag">min：</label>
+  <input type="number" id="minMag1" name="minNum">
+  <label for="maxMag">max：</label>
+  <input type="number" id="maxMag1" name="maxNum">
+  <label for="state">State：</label>
+  <input type="text" id="state" name="state">
   <label for="numMag">Inc：</label>
-  <input type="text" id="numMag" name="numMag" placeholder="need to add num">
+  <input type="number" id="numMag" name="incNum" placeholder="need to add num">
   <input type="submit" value="Update">
 </form>
+
+<h3>query by cache</h3>
+<div>
+  <form>
+    <label for="minMag">min：</label>
+    <input type="number" id="minMag3" name="minNum">
+    <label for="maxMag">max：</label>
+    <input type="number" id="maxMag3" name="maxNum">
+    <button type="button" onclick="searchByNum()">Serach</button>
+  </form>
+</div>
+
+<h3>query by cache with N</h3>
+<div>
+  <form>
+    <label for="minMag">min：</label>
+    <input type="number" id="minMag4" name="minNum">
+    <label for="maxMag">max：</label>
+    <input type="number" id="maxMag4" name="maxNum">
+    <label for="num">N：</label>
+    <input type="number" id="num1" name="n">
+    <button type="button" onclick="searchByNum()">Serach</button>
+  </form>
+</div>
 <!--<script>
 
   $('#add').submit(function (event) {

@@ -101,31 +101,36 @@
         }
       });
     }
+
+    function deleteStudent(obj){
+      // 保存当前选中要删除的项
+      selectedItem = $(obj).closest('tr');
+      const peopleName = selectedItem.find('td:first-child').text()
+      console.log(peopleName);
+      // 显示确认对话框
+      if (confirm("Are you sure you want to delete this item？")) {
+        // Ajax
+        var url = '/api/quiz1/delete/'+peopleName;
+        $.ajax({
+          type: 'PUT',
+          url: url,
+          dataType: 'json',
+          success: function(result) {
+            alert("Success!");
+            // 删除成功后从表格中删除该行
+            selectedItem.remove();
+            selectedItem = null;
+          },
+          error: function(xhr, status, error) {
+            // 删除失败时弹出错误消息
+            alert('failed：' + error);
+          }
+        });
+      };
+    }
   // 给“删除”按钮绑定单击事件
   $('#studentsTable').on('click', 'button.btnClick', function() {
-    // 保存当前选中要删除的项
-    selectedItem = $(this).closest('tr');
-    const peopleName = selectedItem.find('td:first-child').text()
-    console.log(peopleName);
-    // 显示确认对话框
-    if (confirm("Are you sure you want to delete this item？")) {
-      // Ajax
-      var url = '/api/quiz1/delete/'+peopleName;
-      $.ajax({
-        type: 'PUT',
-        url: url,
-        dataType: 'json',
-        success: function(result) {
-          // 删除成功后从表格中删除该行
-          selectedItem.remove();
-          selectedItem = null;
-        },
-        error: function(xhr, status, error) {
-          // 删除失败时弹出错误消息
-          alert('failed：' + error);
-        }
-      });
-    }
+    deleteStudent(this);
   });
     /*// delete
     function deleteStudent(peopleName) {
