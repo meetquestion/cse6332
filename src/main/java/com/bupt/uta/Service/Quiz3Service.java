@@ -3,7 +3,7 @@ package com.bupt.uta.Service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bupt.uta.entity.Quiz3;
 import com.bupt.uta.entity.Quiz3Vo;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
 
