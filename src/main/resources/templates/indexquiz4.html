@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>quiz4</title>
+    <!-- 引入ECharts库 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <style>
+        .chart {
+            width: 70%;
+            height: 90vh;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<!-- 输入元组 -->
+<div>
+    <label for="tuples">Input tuples: (3 to 15, in the form of {letters, amount}, such as "A8", "B2")</label>
+    <input id="tuples" type="text">
+    <button id="generateChart">generatePieChart</button>
+</div>
+<!-- 饼图容器 -->
+<div id="chart"></div>
+
+<div>
+    <input id="inputData" type="text" placeholder="Input tuples">
+    <button id="generateBarChart">generateBarChart</button>
+</div>
+<div id="barChart" style="width: 70%; height: 400px;"></div>
+
+<script>
+    $(document).ready(function() {
+        // 监听生成饼图按钮点击事件
+        $('#generateChart').click(function() {
+            let tuplesInput = $('#tuples').val();
+            let tuples = parseTuples(tuplesInput);
+
+            if (tuples.length >= 3 && tuples.length <= 15) {
+                generatePieChart(tuples);
+            } else {
+                alert('Input tuples！');
+            }
+        });
+
+        // Parsing input tuples
+        function parseTuples(input) {
+            var tuples = [];
+            var pattern = /([A-Za-z])(\d+)/g;
+            var match;
+
+            while ((match = pattern.exec(input)) !== null) {
+                var letter = match[1];
+                var amount = parseInt(match[2]);
+
+                tuples.push({ letter: letter, amount: amount });
+            }
+
+            return tuples;
+        }
+
+        // generatePieChart
+        function generatePieChart(tuples) {
+            var chartDom = document.getElementById('chart');
+            var myChart = echarts.init(chartDom);
+
+            var data = tuples.map(function(tuple) {
+                return { value: tuple.amount, name: tuple.letter };
+            });
+
+            var option = {
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '70%',
+                        label: {
+                            show: true,
+                            formatter: '{b}: {c}'
+                        },
+                        data: data
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+        }
+    });
+
+    $(function() {
+        $('#generateBarChart').click(function() {
+            let input = $('#inputData').val().trim();
+            let tuples = input.split(',');
+
+            // 验证输入的元组数量是否在范围内
+            if (tuples.length < 2 || tuples.length > 15) {
+                alert('Input tuples！');
+                return;
+            }
+
+            var data = [];
+            for (var i = 0; i < tuples.length; i++) {
+                var tuple = tuples[i].trim();
+                var parts = tuple.split(' ');
+                var word = parts[0];
+                var count = parseInt(parts[1]);
+
+                // 验证计数是否为有效数字
+                if (isNaN(count)) {
+                    alert('Please enter a valid count!');
+                    return;
+                }
+
+                data.push({ word: word, count: count });
+            }
+
+            // 对数据进行排序（按计数降序排列）
+            data.sort(function(a, b) {
+                return b.count - a.count;
+            });
+
+            // 准备数据用于绘制图表
+            var xAxisData = [];
+            var seriesData = [];
+
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                xAxisData.push(item.word);
+                seriesData.push(item.count);
+            }
+
+            // 使用ECharts绘制图表
+            var barChart = echarts.init(document.getElementById('barChart'));
+
+            var option = {
+                color: 'red',
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: xAxisData,
+                    axisTick: { show: false },
+                    axisLabel: { show: true, inside: true }
+                },
+                series: [{
+                    type: 'bar',
+                    data: seriesData,
+                    label: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{c}'
+                    }
+                }]
+            };
+
+            barChart.setOption(option);
+        });
+    });
+</script>
+</body>
+</html>
